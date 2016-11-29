@@ -1,9 +1,16 @@
 import { Component } from '@angular/core';
 
+// import './rxjs-operators';
+
+
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+<hero-list></hero-list>
+<!--<hero-list-promise></hero-list-promise>-->
+<!--<my-wiki></my-wiki>-->
+<!--<my-wiki-smart></my-wiki-smart>-->
+`
 })
 export class AppComponent {
   title = 'app works!';
