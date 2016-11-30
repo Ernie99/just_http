@@ -12,7 +12,7 @@ import {Observable} from "rxjs/Rx";
 <h1>Tour of Heroes ({{mode}})</h1>
 <h3>Heroes:</h3>
 <ul>
-  <li *ngFor="let hero of heroes">{{hero.name}}</li>
+  <li *ngFor="let hero of heroes"><label>id: </label> {{hero.id}} <label>name: </label>{{hero.name}}</li>
 </ul>
 
 <label>New hero name: <input #newHeroName /></label>
@@ -27,14 +27,19 @@ export class HeroListComponent implements OnInit {
   heroes: Hero[];
   mode = "Observable";
 
+  countIt = 55;
+
   constructor(private heroService: HeroService) { }
 
   ngOnInit() {
     this.getHeroes();
   }
 
-  addHero(bla): void{
-    console.log(bla);
+  addHero(name: string): void{
+    var hero: Hero = {id: this.countIt , name: name};
+    this.countIt++;
+    if (!name) { return; }
+    this.heroService.getHeroes().subscribe(heroes => this.heroes.push(hero), error => this.errorMessage = <any>error);
   }
 
   private getHeroes(){

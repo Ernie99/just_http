@@ -19,4 +19,8 @@ export class HeroService {
     return _observableList.asObservable();
   }
 
+  addHero(): Observable<Hero[]>{
+    return this.getHeroes() // just a call thru;
+  }
+
 }
