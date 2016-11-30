@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import {Hero} from "./hero";
+import {HeroService} from "./hero.service";
+import {createCipher} from "crypto";
+import {error} from "util";
+import {Observable} from "rxjs/Rx";
 
 @Component({
   selector: 'hero-list',
+  providers: [HeroService],
   template: `
 <h1>Tour of Heroes ({{mode}})</h1>
 <h3>Heroes:</h3>
@@ -17,11 +23,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeroListComponent implements OnInit {
 
-  mode = "hello world";
+  errorMessage: string;
+  heroes: Hero[];
+  mode = "Observable";
 
-  constructor() { }
+  constructor(private heroService: HeroService) { }
 
   ngOnInit() {
+    this.getHeroes();
+  }
+
+  addHero(bla): void{
+    console.log(bla);
+  }
+
+  private getHeroes(){
+    this.heroService.getHeroes().subscribe(heroes => this.heroes = heroes, error => this.errorMessage = <any>error);
   }
 
 }
