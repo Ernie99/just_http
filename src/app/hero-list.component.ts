@@ -38,8 +38,9 @@ export class HeroListComponent implements OnInit {
   addHero(name: string): void{
     var hero: Hero = {id: this.countIt , name: name};
     this.countIt++;
+
     if (!name) { return; }
-    this.heroService.getHeroes().subscribe(heroes => this.heroes.push(hero), error => this.errorMessage = <any>error);
+    this.heroService.addHero(name).subscribe(heroes => this.heroes.push(hero), error => this.errorMessage = <any>error);
   }
 
   private getHeroes(){

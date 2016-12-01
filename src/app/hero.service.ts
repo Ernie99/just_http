@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {Hero} from "./hero";
 import {HEROES} from "./mock-heroes";
 import {Observable, BehaviorSubject} from "rxjs";
-import {Http, Response} from "@angular/http";
+import {Http, Response, Headers, RequestOptions} from "@angular/http";
 
 
 @Injectable()
@@ -25,12 +25,18 @@ export class HeroService {
       .catch(this.handleError);
   }
 
-  addHero(): Observable<Hero[]>{
-    return this.getHeroes() // just a call thru;
+  addHero(name: string): Observable<Hero>{
+    // return this.getHeroes() // just a call thru;
+    let headers = new Headers({ 'Content-type' : 'application/json' });
+    let options = new RequestOptions({ headers: headers});
+
+    return this.http.post(this.heroesUrl, { name }, options)
+      .map(this.extractData)
+      .catch(this.handleError);
   }
 
   private extractData(res: Response) {
-    let body = res.json();
+    let body = res.json()
     return body.data || { };
   }
   private handleError (error: Response | any) {
